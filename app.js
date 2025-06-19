@@ -18,16 +18,10 @@ import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 
-// ✅ Global Middlewares
-const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5174";
-console.log(allowedOrigin)
 
-app.use(
-  cors({
-    origin: allowedOrigin, // ❗ NOT "*"
-    credentials: true,
-  })
-);app.use(express.json());
+// ✅ Global Middlewares
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
