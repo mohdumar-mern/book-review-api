@@ -18,7 +18,7 @@ const app = express();
 // ✅ Global Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://book-review-platform-2wvn.onrender.com/",
+    origin: process.env.CLIENT_URL ,
     credentials: true,
   })
 );
