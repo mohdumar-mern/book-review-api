@@ -8,7 +8,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // ✅ Import custom middleware and routes
-import { pageNotFound, errorHandling } from "./middleware/errorHandlingMiddleware.js";
+import {
+  pageNotFound,
+  errorHandling,
+} from "./middleware/errorHandlingMiddleware.js";
 import booksRoutes from "./routes/bookRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -16,13 +19,15 @@ import userRoutes from "./routes/userRoutes.js";
 const app = express();
 
 // ✅ Global Middlewares
+const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5174";
+console.log(allowedOrigin)
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ,
+    origin: allowedOrigin, // ❗ NOT "*"
     credentials: true,
   })
-);
-app.use(express.json());
+);app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
@@ -30,8 +35,6 @@ app.use(morgan("dev"));
 app.use("/api/books", booksRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/auth", userRoutes);
-
-
 
 // ✅ Error Handling Middleware (must come last)
 app.use(pageNotFound);
